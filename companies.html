@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created in Webflow. http://www.webflow.com-->
-<!-- Last Published: Tue Sep 15 2015 10:39:11 GMT+0000 (UTC) -->
+<!-- Last Published: Tue Oct 27 2015 17:40:58 GMT+0000 (UTC) -->
 <html data-wf-site="55f72573f9d3ccf10ddd8e70" data-wf-page="55f7e46647869a3a34eef700">
 <head>
   <meta charset="utf-8">
@@ -14,13 +14,13 @@
   <script>
     WebFont.load({
       google: {
-        families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Titillium Web:200,300,regular,600,700,900"]
+        families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Droid Serif:400,700","Titillium Web:200,300,regular,600,700,900"]
       }
     });
   </script>
   <script type="text/javascript" src="js/modernizr.js"></script>
-  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
-  <link rel="apple-touch-icon" href="https://daks2k3a4ib2z.cloudfront.net/img/webclip.png">
+  <link rel="shortcut icon" type="image/x-icon" href="images/leangap-favicon32.png">
+  <link rel="apple-touch-icon" href="images/leangap-favicon.png">
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-51542860-4'], ['_trackPageview']);
@@ -30,13 +30,14 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <!-- Color scheme: https://coolors.co/app/233041-f53947-4f7cac-e8e9f3-2e5eaa -->
 </head>
 <body>
   <div class="w-nav fixed-navbar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
     <div class="w-container nav-container">
       <a class="w-nav-brand w-clearfix nav-logo" href="index.html"><img class="nav-logo-img" width="612" src="images/leangap-full.png">
       </a>
-      <nav class="w-nav-menu mobile-menu" role="navigation"><a class="w-nav-link nav-link" href="overview.html">program</a><a class="w-nav-link nav-link" href="companies.html">companies</a><a class="w-nav-link nav-link" href="#">team</a><a class="w-nav-link nav-link admissions" href="https://airtable.com/shrZTNHXBDKPX6gBw" target="_blank">admissions</a>
+      <nav class="w-nav-menu mobile-menu" role="navigation"><a class="w-nav-link nav-link" href="overview.html">program</a><a class="w-nav-link nav-link" href="companies.html">companies</a><a class="w-nav-link nav-link" href="team.html">team</a><a class="w-nav-link nav-link" href="admissions.html">admissions</a><a class="w-nav-link nav-link admissions" href="https://airtable.com/shrZTNHXBDKPX6gBw" target="_blank">apply now</a>
       </nav>
       <div class="w-nav-button hamburger">
         <div class="w-icon-nav-menu"></div>
@@ -44,107 +45,96 @@
     </div>
   </div>
   <div class="w-section inner-section-hero">
-    <div class="w-container">
-      <h2 class="inner-hero-heading">Great companies from great founders</h2>
+    <div class="w-container container-inner-section">
+      <h2 class="inner-hero-heading">Only real, scaleable companies are built at
+								Leangap. Our students aren’t interested in concepts</h2>
       <div class="inner-subheading">Meet the 2015 batch of Leangap Companies</div>
     </div>
   </div>
-  <div class="w-section section blue">
-    <div class="div-container">
-      <div class="w-row timeline-row">
-        <div class="w-col w-col-6 column companies">
-          <div class="company-logo-container"><img class="icon-timeline companies" width="270" src="images/10486136_1632120800399467_3682664875789363126_n.png">
-            <div class="traction">3,000 downloads in 6 weeks
-              <br>1,800 monthly active users</div>
-          </div>
-        </div>
-        <div class="w-col w-col-6 column companies">
-          <div class="timeline-container-text">
+  <div class="w-section section companies">
+    <div class="w-container">
+      <div class="w-row row-companies">
+        <div class="w-col w-col-6">
+          <div class="company">
             <div class="timeline-heading companies">seedlings</div>
-            <div class="separator testimonial green"></div>
-            <div class="timeline-text companies">Welcome to the world of Seedlings. Here, you can help us grow. Seedlings is an iOS game that is designed to help inspire you through the use of passwords. You’ll find your days brighter and more flower-filled as you take your journey with us. Let’s go! Play positive!</div><a class="w-button button" href="http://www.playseedlings.com/" target="_blank">download</a>
+            <div class="separator"></div>
+            <div class="logo-container seedlings"></div>
+            <div class="text-container">
+              <div class="achievements">3,000 downloads in first 3 weeks. 1,800 monthly active users.</div>
+              <div class="timeline-text companies">Seedlings is an iOS game that is designed to help inspire you through the use of passwords. You’ll find your days brighter and more flower-filled as you take your journey with us. Let’s go! Play positive!</div>
+            </div><a class="w-button button" href="http://www.playseedlings.com/" target="_blank">download app</a>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="w-section section stride">
-    <div class="div-container">
-      <div class="w-row timeline-row">
-        <div class="w-col w-col-6 column companies">
-          <div class="company-logo-container"><img class="icon-timeline companies" width="170" src="images/11223486_1601776383415229_5658398557534832986_n.png">
-            <div class="traction">partnerships with computer science association
-              <br>CS teachers and students on board</div>
-          </div>
-        </div>
-        <div class="w-col w-col-6 column companies">
-          <div class="timeline-container-text">
+        <div class="w-col w-col-6">
+          <div class="company">
             <div class="timeline-heading companies">stride</div>
-            <div class="separator testimonial green"></div>
-            <div class="timeline-text companies">We make computer science classrooms more functional by allowing teachers to connect with students in real time to improve their coding skills.</div><a class="w-button button" href="http://stridecode.com/" target="_blank">visit site</a>
+            <div class="separator"></div>
+            <div class="logo-container stride"></div>
+            <div class="text-container">
+              <div class="achievements">Partnership with&nbsp;Computer Science Association.&nbsp;Over 20 beta-testing teachers across america</div>
+              <div class="timeline-text companies">We make computer science classrooms more functional by allowing teachers to connect with students in real time to improve their coding skills.</div>
+            </div><a class="w-button button" href="http://stridecode.com/" target="_blank">visit site</a>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="w-section section brown">
-    <div class="div-container">
-      <div class="w-row timeline-row">
-        <div class="w-col w-col-6 column companies">
-          <div class="company-logo-container"><img class="icon-timeline companies" width="302" src="images/11411808_479601595550545_5113653575316354772_o.png">
-            <div class="traction">several prototypes manufactured
-              <br>ready for kickstarter</div>
+      <div class="w-row row-companies">
+        <div class="w-col w-col-6">
+          <div class="company">
+            <div class="timeline-heading companies">sparc</div>
+            <div class="separator"></div>
+            <div class="logo-container sparc"></div>
+            <div class="text-container">
+              <div class="achievements">Prototypes manufactured. Kickstarter campaign launched.</div>
+              <div class="timeline-text companies">Introducing the magnetic interchangeable belt - allowing you to increase your style choice, while decreasing bulk.&nbsp;
+                <br>
+                <br>Buckle Up.</div>
+            </div><a class="w-button button" href="http://www.sparcbelts.com/" target="_blank">visit site</a>
           </div>
         </div>
-        <div class="w-col w-col-6 column companies">
-          <div class="timeline-container-text">
-            <div class="timeline-heading companies">sparc belts</div>
-            <div class="separator testimonial green"></div>
-            <div class="timeline-text companies">Introducing the magnetic interchangeable belt - allowing you to increase your style choice, while decreasing bulk.&nbsp;
-              <br>
-              <br>Buckle Up.</div><a class="w-button button" href="http://www.sparcbelts.com/" target="_blank">visit site</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="w-section section pilldrops">
-    <div class="div-container">
-      <div class="w-row timeline-row">
-        <div class="w-col w-col-6 column companies">
-          <div class="company-logo-container"><img class="icon-timeline companies" width="240" src="images/11411655_474640062714398_290968893224174973_o.png">
-            <div class="traction">working prototype with
-              <br>technology developed at leangap
-              <br>ready for kickstarter</div>
-          </div>
-        </div>
-        <div class="w-col w-col-6 column companies">
-          <div class="timeline-container-text">
+        <div class="w-col w-col-6">
+          <div class="company">
             <div class="timeline-heading companies">pilldrops</div>
-            <div class="separator testimonial green"></div>
-            <div class="timeline-text companies">Pilldrops automates the entire&nbsp;pill-taking process by organizing all your pills and matching each pill to the time you need to take it. It connects via bluetooth to the Pilldrops app on your smartphone to keep you always updated.</div><a class="w-button button" href="http://www.pilldrops.com/" target="_blank">visit site</a>
+            <div class="separator"></div>
+            <div class="logo-container pilldrops"></div>
+            <div class="text-container">
+              <div class="achievements">Working prototype with tech developed at Leangap. Ready for Kickstarter.</div>
+              <div class="timeline-text companies">Pilldrops is a device that automates the entire&nbsp;pill-taking process by organising all your pills and matching each pill to the time you need to take it. It connects via bluetooth to your smartphone to keep you updated.</div>
+            </div><a class="w-button button" href="http://www.pilldrops.com/" target="_blank">visit site</a>
+          </div>
+        </div>
+      </div>
+      <div class="w-row row-companies last">
+        <div class="w-col w-col-6">
+          <div class="company">
+            <div class="timeline-heading companies">aer</div>
+            <div class="separator"></div>
+            <div class="logo-container aer"></div>
+            <div class="text-container">
+              <div class="achievements">Partnership with the Red Cross. Fully developed crowdfunding platform.</div>
+              <div class="timeline-text companies">Aer is a crowdfunding platform where users can exchange items within their local community.</div>
+            </div><a class="w-button button" href="http://www.aer.fund/" target="_blank">visit site</a>
+          </div>
+        </div>
+        <div class="w-col w-col-6">
+          <div class="company">
+            <div class="timeline-heading companies">tiwitalk</div>
+            <div class="separator"></div>
+            <div class="logo-container tiwi"></div>
+            <div class="text-container">
+              <div class="achievements">Working technology that detects the mood of a conversation.</div>
+              <div class="timeline-text companies">TiwiTalk will detect the mood of your conversation and change your background color and font accordingly. You may also select themes to set the mood yourself.&nbsp;</div>
+            </div><a class="w-button button" href="https://github.com/nimus0108/tiwitalk" target="_blank">visit site</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="w-section section tiwi">
-    <div class="div-container">
-      <div class="w-row timeline-row">
-        <div class="w-col w-col-6 column companies">
-          <div class="company-logo-container"><img class="icon-timeline companies" width="240" src="images/11146662_827874393934470_4213891513333028441_o.jpg">
-            <div class="traction">working app with
-              <br>mood-detecting technology</div>
-          </div>
-        </div>
-        <div class="w-col w-col-6 column companies">
-          <div class="timeline-container-text">
-            <div class="timeline-heading companies">tiwitalk</div>
-            <div class="separator testimonial green"></div>
-            <div class="timeline-text companies">Texting doesn't let you convey any more than just text. We hope to solve this problem by allowing users to convey emotions and feelings in ways that texting nor face-to-face conversations don't allow us to.&nbsp;TiwiTalk will detect the mood of your conversation and change your background color and font accordingly. You may also select themes to set the mood yourself. Your customization. Your style. Your communication.</div><a class="w-button button" href="https://www.tiwitalk.com/" target="_blank">visit site</a>
-          </div>
-        </div>
-      </div>
+  <div class="w-section price-section">
+    <div class="w-container container">
+      <h2 class="price-heading">Boston, MA • $5,985 (Non-residential $4,485) for Six Weeks <br>• June 27th-August 5th, 2016 •</h2>
+      <h2 class="price-heading scholarship">Scholarships</h2>
+      <div class="scholarship-text">Financial aid is completely need-based. If we want you, we will make it possible for you to attend.
+        <br>No equity is ever taken at businesses developed in Leangap.</div><a class="button application" href="https://airtable.com/shrZTNHXBDKPX6gBw" target="_blank">apply for summer 2016</a>
     </div>
   </div>
   <div class="w-section footer">
@@ -155,7 +145,8 @@
         </div>
         <div class="w-col w-col-1 w-col-stack"></div>
         <div class="w-col w-col-7 w-col-stack">
-          <div>About | Press&nbsp;| Careers&nbsp;| Locate Retailers&nbsp;| Affiliate&nbsp;| Newsletter&nbsp;| Terms and Conditions&nbsp;| Privacy Policy&nbsp;| Contact Us&nbsp;|&nbsp;&nbsp;Copyright © 2015 Leangap Inc. All rights reserved.&nbsp;</div>
+          <div><a class="links" href="contact.html">Contact Us</a>&nbsp;|&nbsp;&nbsp;Copyright © 2015 Leangap Inc. | Designed by <a class="links" target="_blank" href="https://twitter.com/sadokx">@sadokX</a>
+          </div>
         </div>
       </div>
     </div>
@@ -163,22 +154,5 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/webflow.js"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-  <script>
-    var start1 = $('.navbar').offset().top;
-    $.event.add(window, "scroll", function() {
-    	var p = $(window).scrollTop();
-    	if ( p > start1 ) {
-    		$('.navbar').css({
-    		    position:'fixed',
-    		    top:0
-    		});
-    	} else { 
-    		$('.navbar').css(
-    		    {position:'absolute',
-    		    top:'100%'
-    		});
-    	}
-    });
-  </script>
 </body>
 </html>

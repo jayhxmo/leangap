@@ -99,11 +99,12 @@
 	 * Webflow.define - Define a named module
 	 * @param  {string} name
 	 * @param  {function} factory
+	 * @param  {object} options
 	 * @return {object}
 	 */
-	Webflow.define = function(name, factory) {
+	Webflow.define = function(name, factory, options) {
 	  if (modules[name]) unbindModule(modules[name]);
-	  var instance = modules[name] = factory($, _) || {};
+	  var instance = modules[name] = factory($, _, options) || {};
 	  bindModule(instance);
 	  return instance;
 	};
@@ -187,6 +188,7 @@
 	  if (mode === 'slug') return inApp && window.__wf_slug;
 	  if (mode === 'editor') return window.WebflowEditor;
 	  if (mode === 'test') return window.__wf_test;
+	  if (mode === 'frame') return window !== window.top;
 	};
 
 	// Feature detects + browser sniffs  ಠ_ಠ
@@ -484,11 +486,9 @@
 	        position: 'fixed',
 	        bottom: 0,
 	        right: 0,
-	        borderTop: '5px solid #2b3239',
-	        borderLeft: '5px solid #2b3239',
 	        borderTopLeftRadius: '5px',
 	        backgroundColor: '#2b3239',
-	        padding: '5px 5px 5px 10px',
+	        padding: '8px 12px 5px 15px',
 	        fontFamily: 'Arial',
 	        fontSize: '10px',
 	        textTransform: 'uppercase',
@@ -505,7 +505,7 @@
 	      $webflowLogo.attr('src', 'https://daks2k3a4ib2z.cloudfront.net/54153e6a3d25f2755b1f14ed/5445a4b1944ecdaa4df86d3e_subdomain-brand.svg');
 	      $webflowLogo.css({
 	        opacity: 0.9,
-	        width: '55px',
+	        width: '57px',
 	        verticalAlign: 'middle',
 	        paddingLeft: '4px',
 	        paddingBottom: '3px'
@@ -720,24 +720,31 @@
 
 	var Webflow = __webpack_require__(1);
 
-	Webflow.define('edit', module.exports = function($, _) {
+	Webflow.define('edit', module.exports = function($, _, options) {
+	  options = options || {};
+
+	  // Exit early in test env or when inside an iframe
+	  if (Webflow.env('test') || Webflow.env('frame')) {
+	    // Allow test fixtures to continue
+	    if (!options.fixture) {
+	      return {exit: 1};
+	    }
+	  }
+
 	  var api = {};
 	  var $win = $(window);
-	  var noop = function() {};
 	  var location = document.location;
 	  var hashchange = 'hashchange';
 	  var loaded;
-
-	  // Only allow editor to load outside test env
-	  var loadEditor = Webflow.env('test') ? noop : load;
+	  var loadEditor = options.load || load;
 
 	  // Check localStorage for editor data
 	  if (localStorage && localStorage.getItem && localStorage.getItem('WebflowEditor')) {
 	    loadEditor();
 
 	  } else if (location.search) {
-	    // Check url query for `edit` parameter or an invalid query ending in `?edit`
-	    if (/[?&](edit)(?:[=&]|$)/.test(location.search) || /\?edit$/.test(location.search)) {
+	    // Check url query for `edit` parameter or any url ending in `?edit`
+	    if (/[?&](edit)(?:[=&?]|$)/.test(location.search) || /\?edit$/.test(location.href)) {
 	      loadEditor();
 	    }
 
@@ -758,7 +765,7 @@
 	    window.WebflowEditor = true;
 	    $win.off(hashchange, checkHash);
 	    $.ajax({
-	      url: cleanSlashes(("https://webflow.com") + '/api/editor/view'),
+	      url: cleanSlashes(("https://editor-api.webflow.com") + '/api/editor/view'),
 	      xhrFields: { withCredentials: true },
 	      dataType: 'json',
 	      crossDomain: true,
@@ -786,7 +793,7 @@
 	  }
 
 	  function prefix(url) {
-	    return (url.indexOf('//') >= 0) ? url : cleanSlashes(("https://webflow.com") + url);
+	    return (url.indexOf('//') >= 0) ? url : cleanSlashes(("https://editor-api.webflow.com") + url);
 	  }
 
 	  function cleanSlashes(url) {
@@ -1152,7 +1159,6 @@
 	  var inApp = env();
 	  var emptyFix = env.chrome && env.chrome < 35;
 	  var transNone = 'none 0s ease 0s';
-	  var fallbackProps = /width|height/;
 	  var $subs = $();
 	  var config = {};
 	  var anchors = [];
@@ -1440,8 +1446,7 @@
 	      transitions = transitions.split(',');
 	      for (var i = 0; i < transitions.length; i++) {
 	        var transition = transitions[i];
-	        var options = fallbackProps.test(transition) ? { fallback: true } : null;
-	        _tram[addMethod](transition, options);
+	        _tram[addMethod](transition);
 	      }
 	    }
 
@@ -2014,14 +2019,15 @@
 	    return 'data:image/svg+xml;charset=utf-8,' + encodeURI(svg);
 	  }
 
-	  // Compute some dimensions manually for iOS, because of buggy support for VH.
+	  // Compute some dimensions manually for iOS < 8, because of buggy support for VH.
 	  // Also, Android built-in browser does not support viewport units.
 	  (function () {
 	    var ua = window.navigator.userAgent;
-	    var iOS = /(iPhone|iPod|iPad).+AppleWebKit/i.test(ua);
+	    var iOSRegex = /(iPhone|iPad|iPod);[^OS]*OS (\d)/;
+	    var iOSMatches = ua.match(iOSRegex);
 	    var android = ua.indexOf('Android ') > -1 && ua.indexOf('Chrome') === -1;
 
-	    if (!iOS && !android) {
+	    if (!android && (!iOSMatches || iOSMatches[2] > 7)) {
 	      return;
 	    }
 
@@ -2938,6 +2944,9 @@
 	      findEl(loc.hash.substring(1));
 	    }
 
+	    // The current page url without the hash part.
+	    var locHref = loc.href.split('#')[0];
+
 	    // When clicking on a link, check if it links to another part of the page
 	    $doc.on('click', 'a', function(e) {
 	      if (Webflow.env('design')) {
@@ -2953,7 +2962,10 @@
 	        return;
 	      }
 
-	      var hash = this.hash ? this.hash.substring(1) : null;
+	      // The href property always contains the full url so we can compare
+	      // with the document’s location to only target links on this page.
+	      var parts = this.href.split('#');
+	      var hash = parts[0] === locHref ? parts[1] : null;
 	      if (hash) {
 	        findEl(hash, e);
 	      }
@@ -4303,5 +4315,8 @@ Webflow.require('ix').init([
   {"slug":"for-gamers","name":"for gamers","value":{"style":{"opacity":0,"x":"50px","y":"0px"},"triggers":[{"type":"load","stepsA":[{"wait":300},{"opacity":1,"transition":"transform 700ms ease 0ms, opacity 700ms ease 0ms","x":"0px","y":"0px"}],"stepsB":[]}]}},
   {"slug":"by-gamers","name":"by gamers","value":{"style":{"opacity":0,"x":"-50px","y":"0px"},"triggers":[{"type":"load","stepsA":[{"wait":700},{"opacity":1,"transition":"transform 700ms ease 0ms, opacity 700ms ease 0ms","x":"0px","y":"0px"}],"stepsB":[]}]}},
   {"slug":"logo-load","name":"logo load","value":{"style":{"opacity":0,"scale":1.5},"triggers":[{"type":"load","stepsA":[{"opacity":1,"transition":"transform 500ms ease 0ms, opacity 500ms ease 0ms","scale":1}],"stepsB":[]}]}},
-  {"slug":"scrolldown","name":"scrolldown","value":{"style":{"opacity":0,"x":"0px","y":"-50px"},"triggers":[{"type":"load","stepsA":[{"wait":1300},{"opacity":1,"transition":"transform 500ms ease 0ms, opacity 500ms ease 0ms","x":"0px","y":"0px"}],"stepsB":[]}]}}
+  {"slug":"scrolldown","name":"scrolldown","value":{"style":{"opacity":0,"x":"0px","y":"-50px"},"triggers":[{"type":"load","stepsA":[{"wait":1300},{"opacity":1,"transition":"transform 500ms ease 0ms, opacity 500ms ease 0ms","x":"0px","y":"0px"}],"stepsB":[]}]}},
+  {"slug":"beating-heart","name":"beating heart","value":{"style":{},"triggers":[{"type":"load","loopA":true,"stepsA":[{"transition":"transform 1100ms ease 0ms","y":"-50%","scale":0.8},{"wait":200},{"transition":"transform 200ms ease 0ms","scale":1,"x":"0px","y":"-50%"}],"stepsB":[]}]}},
+  {"slug":"fire","name":"fire","value":{"style":{},"triggers":[{"type":"load","loopA":true,"stepsA":[{"opacity":0.8,"transition":"transform 100ms ease 0ms, opacity 100ms ease 0ms","x":"0px","y":"-50%"},{"opacity":0.97,"wait":100,"transition":"transform 100ms ease 0ms, opacity 100ms ease 0ms","x":"0px","y":"-50%"},{"wait":3000},{"opacity":0.74,"wait":200,"transition":"transform 100ms ease 0ms, opacity 200ms ease 0ms","x":"0px","y":"-50%"},{"wait":100},{"opacity":0.84,"transition":"transform 100ms ease 0ms, opacity 100ms ease 0ms","x":"0px","y":"-50%"},{"wait":100},{"opacity":0.75,"wait":300,"transition":"transform 100ms ease 0ms, opacity 300ms ease 0ms","x":"0px","y":"-50%"},{"wait":100},{"opacity":1,"transition":"transform 100ms ease 0ms, opacity 100ms ease 0ms","x":"0px","y":"-50%"},{"wait":100}],"stepsB":[]}]}},
+  {"slug":"email-underline","name":"email underline","value":{"style":{},"triggers":[{"type":"hover","selector":".email-underline","stepsA":[{"width":"300px","transition":"width 500ms ease 0ms"}],"stepsB":[{"width":"80px","transition":"width 500ms ease 0ms"}]}]}}
 ]);
